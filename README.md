@@ -1,0 +1,1 @@
+# grafana-kasa-power-strip
