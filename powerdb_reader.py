@@ -11,7 +11,12 @@ def parse_powerdb_line(line):
     if (len(valid_index_name_json_str) == 0):
         return (timestamp, "")
 
-    parsed_json = json.loads(valid_index_name_json_str)
+    try:
+        parsed_json = json.loads(valid_index_name_json_str)
+    except Exception as e:
+        print(line)
+        print(e)
+        parsed_json = ""
     return (timestamp, parsed_json)
 
 class PowerDbReader:
