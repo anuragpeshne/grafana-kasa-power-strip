@@ -31,14 +31,15 @@ def query():
     from_ = convert_to_time_ms(req['range']['from'])
     to = convert_to_time_ms(req['range']['to'])
 
-    target = req['targets'][0]['target']
-    target_id = powerDbReader.plug_name_to_id(target)
-    data = [
-        {
-            "target": req['targets'][0]['target'],
-            "datapoints": powerDbReader.get_data_in_range(target_id, from_, to)
-        }
-    ]
+    data = []
+    for target in req['targets']:
+        target_name = target['target']
+        target_id = powerDbReader.plug_name_to_id(target_name)
+        data.append(
+            {
+                "target": target['target'],
+                "datapoints": powerDbReader.get_data_in_range(target_id, from_, to)
+            })
 
     return jsonify(data)
 
