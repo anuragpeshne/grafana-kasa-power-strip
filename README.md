@@ -10,3 +10,5 @@
    1. Configuration -> Data Sources -> Search for `SimpleJson`
    2. Enter URL: `localhost:5000` (or the address and port of the flask server)
 3. Start the data server: `python3 server.py`
+
+![Screenshot](https://github.com/anuragpeshne/grafana-kasa-power-strip/raw/main/powerstrip_screenshot.png "Screenshot")
