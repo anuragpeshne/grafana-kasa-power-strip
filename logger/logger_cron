@@ -1,0 +1,4 @@
+# m h  dom mon dow   command
+*/5 * * * * /opt/energy_monitor/logger/logger.sh >> /opt/energy_monitor/db/powerdb 2>> /opt/energy_monitor/db/powerdb-errors
+# remember to end this file with an empty new line
+

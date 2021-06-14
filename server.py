@@ -6,6 +6,7 @@ from datetime import datetime
 import _strptime  # https://bugs.python.org/issue7980
 from flask import Flask, request, jsonify
 from powerdb_reader import PowerDbReader
+import sys
 
 app = Flask(__name__)
 app.debug = True
@@ -68,6 +69,10 @@ def after_request(response):
     return response
 
 if __name__ == "__main__":
-    #TODO get powerdb file path as param
-    powerDbReader = PowerDbReader("/home/anurag/Sync/db/powerdb")
-    app.run()
+    if len(sys.argv) < 2:
+        print("Enter db file path")
+        exit(1)
+
+    db_file_path = sys.argv[1]
+    powerDbReader = PowerDbReader(db_file_path)
+    app.run(host='0.0.0.0', port=5000)
