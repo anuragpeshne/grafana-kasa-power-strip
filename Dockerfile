@@ -8,7 +8,8 @@ RUN apk update && \
       libxml2-dev \
       musl-dev \
       linux-headers \
-      git
+      git \
+      bash
 
 # Create work dir
 RUN mkdir -p /opt/energy_monitor
@@ -26,10 +27,8 @@ COPY . .
 RUN mkdir -p /opt/energy_monitor/db
 RUN touch /opt/energy_monitor/db/powerdb
 COPY logger/logger_cron /etc/crontabs/root
-CMD ["crond", "-f", "-d", "8"]
+RUN ["crond", "-b", "-d", "8"]
 
 # setup data server
-RUN pip install -r requirements.txt && \
-    python server.py "/opt/energy_monitor/db/powerdb" &
-
-EXPOSE 5000
+RUN pip install -r requirements.txt
+CMD ["python", "./server.py", "/opt/energy_monitor/db/powerdb"]

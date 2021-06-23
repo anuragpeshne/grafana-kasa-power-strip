@@ -2,7 +2,7 @@
 
 if [ -z $STRIP_IP ];
 then 
-  power=$(/home/pi/.local/bin/pyhs100 --strip --host $STRIP_IP emeter | tail -n 1)
+  power=$(/usr/local/bin/pyhs100 --strip --host $STRIP_IP emeter | tail -n 1)
   timestamp=$(date +%s)
 
   echo -e "$timestamp, $power"
