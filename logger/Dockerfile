@@ -12,8 +12,8 @@ RUN apk update && \
       bash
 
 # Create work dir
-RUN mkdir -p /opt/energy_monitor
-WORKDIR /opt/energy_monitor
+RUN mkdir -p /opt/energy_monitor/logger
+WORKDIR /opt/energy_monitor/logger
 
 # setup pyHS100 - needed for polling the powerstrip
 RUN git clone https://github.com/GadgetReactor/pyHS100.git && \
@@ -24,11 +24,7 @@ RUN git clone https://github.com/GadgetReactor/pyHS100.git && \
 COPY . .
 
 # setup cron for logger
-RUN mkdir -p /opt/energy_monitor/db
-RUN touch /opt/energy_monitor/db/powerdb
-COPY logger/logger_cron /etc/crontabs/root
-RUN ["crond", "-b", "-d", "8"]
-
-# setup data server
-RUN pip install -r requirements.txt
-CMD ["python", "./server.py", "/data/powerdb"]
+RUN mkdir -p /data
+RUN touch /data/powerdb
+COPY ./logger_cron /etc/crontabs/root
+CMD ["crond", "-f", "-d", "8"]

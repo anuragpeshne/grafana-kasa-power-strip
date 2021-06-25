@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  logger:
+    build: ./logger
+    volumes:
+      - type: volume
+        source: loggerdb
+        target: /data
+    environment:
+      - "STRIP_IP=192.168.0.2"
+  logserver:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - type: volume
+        source: loggerdb
+        target: /data
+        read_only: true
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - "GF_INSTALL_PLUGINS=grafana-simple-json-datasource"
+volumes:
+  loggerdb:
