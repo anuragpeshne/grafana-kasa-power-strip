@@ -1,15 +1,8 @@
-FROM python:3-alpine
+FROM python:3-slim
 
-RUN apk update && \
-      apk add --no-cache gcc \
-      libffi-dev \
-      openssl-dev \
-      libxslt-dev \
-      libxml2-dev \
-      musl-dev \
-      linux-headers \
-      git \
-      bash
+RUN apt-get update && \
+    apt-get upgrade && \
+    apt-get install -y git bash cron rsyslog
 
 # Create work dir
 RUN mkdir -p /opt/energy_monitor/logger
@@ -27,4 +20,4 @@ COPY . .
 RUN mkdir -p /data
 RUN touch /data/powerdb
 COPY ./logger_cron /etc/crontabs/root
-CMD ["crond", "-f", "-d", "8"]
+RUN ["service", "cron", "start"]
