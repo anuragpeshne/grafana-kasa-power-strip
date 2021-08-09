@@ -21,3 +21,6 @@ RUN mkdir -p /data
 RUN touch /data/powerdb
 COPY ./logger_cron /etc/crontabs/root
 RUN ["service", "cron", "start"]
+
+# To keep docker running
+CMD ["tail", "-f", "/dev/null"]
